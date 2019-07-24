@@ -9,6 +9,10 @@ class Album
     @@albums.values
   end
 
+  def self.all_sold
+    @@sold_albums
+  end
+
   def self.clear
     @@albums = {}
     @@total_rows = 0
@@ -55,15 +59,9 @@ class Album
     @@sold_albums = @@albums[self.id]
   end
 
-  def except!(*keys)
-    keys.each { |key| delete(key) }
-    self
-  end
-
   def buy
     self.sold
-    p "temp contains: #{self.id}"
-    @@albums.except!(self.id)
+    @@albums.delete(self.id)
   end
 
   # def ==(album_to_compare)
@@ -79,6 +77,9 @@ class Album
   end
 end
 
+
+
+
 thing2 = Album.new("bacon", "ZZ Top", "1985", "Rock", nil)
 thing2.save
 thing3 = Album.new("taco", "ZZ Top", "1985", "Rock", nil)
@@ -88,4 +89,6 @@ thing.save
 p Album.all
 p "bacon spaces"
 thing2.buy
+thing3.buy
 p Album.all
+p Album.all_sold
