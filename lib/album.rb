@@ -1,3 +1,5 @@
+require ('./lib/song')
+
 class Album
   attr_accessor :id, :name, :artist, :year, :genre
 
@@ -23,9 +25,9 @@ class Album
   end
 
   def self.search(album_name)
-    regex = Regexp.new(album_name)
+    regex = Regexp.new(album_name.downcase)
     @@albums.values.each do |albums|
-      if regex =~ albums.name
+      if regex =~ albums.name.downcase
         return albums
       end
     end
@@ -38,7 +40,7 @@ class Album
   end
 
   def initialize(name, artist, year, genre, id)
-    @name = name.capitalize
+    @name = name
     @artist = artist
     @year = year
     @genre = genre
@@ -64,6 +66,10 @@ class Album
     @@albums.delete(self.id)
   end
 
+  def songs
+  Song.find_by_album(self.id)
+  end
+
   # def ==(album_to_compare)
   #   self.name == album_to_compare.name()
   # end
@@ -80,15 +86,15 @@ end
 
 
 
-thing2 = Album.new("bacon", "ZZ Top", "1985", "Rock", nil)
-thing2.save
-thing3 = Album.new("taco", "ZZ Top", "1985", "Rock", nil)
-thing3.save
-thing = Album.new("afterburner", "ZZ Top", "1985", "Rock", nil)
-thing.save
-p Album.all
-p "bacon spaces"
-thing2.buy
-thing3.buy
-p Album.all
-p Album.all_sold
+# thing2 = Album.new("bacon", "ZZ Top", "1985", "Rock", nil)
+# thing2.save
+# thing3 = Album.new("taco", "ZZ Top", "1985", "Rock", nil)
+# thing3.save
+# thing = Album.new("afterburner", "ZZ Top", "1985", "Rock", nil)
+# thing.save
+# p Album.all
+# p "bacon spaces"
+# thing2.buy
+# thing3.buy
+# p Album.all
+# p Album.all_sold
